@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="SmartCheckbox: Auto-updating Google Sheets checkboxes that respect your manual clicks. Free forever.">
+  <meta name="keywords" content="google sheets checkbox, smart checkbox, dynamic checkbox, google workspace, productivity">
+  <title>SmartCheckbox™ – The Checkbox That Respects Your Clicks</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>Checkmark</text></svg>">
+
+  <style>
+    :root {
+      --primary: #188038;
+      --primary-dark: #0d6b2a;
+      --secondary: #1a73e8;
+      --danger: #d93025;
+      --warning: #f9ab00;
+      --gray: #5f6368;
+      --light: #f8f9fa;
+      --dark: #202124;
+      --border: #dadce0;
+      --radius: 16px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: var(--dark);
+      line-height: 1.7;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+      backdrop-filter: blur(8px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 26px;
+      color: var(--primary);
+    }
+
+    .logo span { color: var(--dark); }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 500;
+      font-size: 15px;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+383    .install-btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .install-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(24,128,56,0.3);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 21px;
+      color: var(--gray);
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(24,128,56,0.35);
+    }
+
+    /* Features */
+    .features {
+      padding: 100px 0;
+      background: var(--light);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 56px;
+      font-weight: 600;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .feature-card {
+      background: white;
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
+    }
+
+    .feature-icon {
+      font-size: 52px;
+      margin-bottom: 18px;
+      color: var(--primary);
+    }
+
+    .feature-card h3 {
+      font-size: 21px;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    /* Demos with Elegant Carousels */
+    .use-cases {
+      padding: 100px 0;
+    }
+
+    .demo-block {
+      display: flex;
+      gap: 40px;
+      margin-bottom: 80px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .demo-content {
+      flex: 1;
+      min-width: 320px;
+    }
+
+    .demo-content h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .demo-content p {
+      margin-bottom: 20px;
+      color: var(--gray);
+      font-size: 17px;
+    }
+
+    .demo-content .btn-primary {
+      font-size: 16px;
+      padding: 12px 28px;
+    }
+
+    /* Elegant Carousel */
+    .carousel-container {
+      flex: 1;
+      min-width: 320px;
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background: white;
+    }
+
+    .carousel {
+      display: flex;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+    }
+
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+      padding: 24px 20px 20px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    /* === PREMIUM CAROUSEL ARROWS === */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 20;
+  opacity: 0.8;
+}
+
+.carousel-nav:hover {
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-50%) scale(1.15);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  opacity: 1;
+}
+
+.carousel-prev { left: 12px; }
+.carousel-next { right: 12px; }
+
+@media (max-width: 480px) {
+  .carousel-nav { display: none; }
+}
+
+    .carousel-nav:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    }
+
+    .carousel-prev { left: 16px; }
+    .carousel-next { right: 16px; }
+
+    .carousel-indicators {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .dot.active {
+      background: white;
+      transform: scale(1.3);
+    }
+
+    /* Pricing */
+    .pricing {
+      padding: 100px 0;
+      background: var(--light);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    .price-card {
+      background: white;
+      padding: 40px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: var(--transition);
+    }
+
+    .price-card.pro {
+      border: 3px solid var(--primary);
+      transform: scale(1.05);
+    }
+
+    .price-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .price {
+      font-size: 52px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 20px 0;
+    }
+
+    .price small {
+      font-size: 17px;
+      color: var(--gray);
+    }
+
+    .coming-soon {
+      background: #e8f5e9;
+      color: var(--primary);
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 15px;
+      margin: 16px 0;
+      display: inline-block;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      background: var(--dark);
+      color: white;
+      text-align: center;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+      font-size: 15px;
+    }
+
+    .footer-links a {
+      color: #aaa;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 38px; }
+      .hero p { font-size: 18px; }
+      .section-title { font-size: 32px; }
+      .demo-block { flex-direction: column; }
+      .carousel-container { order: -1; margin-bottom: 24px; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <nav>
+        <div class="logo">Smart<span>Checkbox</span></div>
+        <div class="nav-links">
+          <a href="#features">Features</a>
+          <a href="#examples">Examples</a>
+          <a href="#pricing">Pricing</a>
+          <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank">Install</a>
+        </div>
+        <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="install-btn">
+          <span class="material-icons" style="font-size:18px;">download</span> Install Free
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <h1>SmartCheckbox™</h1>
+      <p>Checkboxes that <strong>update automatically</strong> — but <strong>never override your clicks</strong>.</p>
+      <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="btn-primary">
+        <span class="material-icons">extension</span> Install Free (1-Click)
+      </a>
+      <p style="margin-top: 18px; color: var(--gray); font-size: 15px;">
+        Works in Google Sheets • No signup • <strong>Free forever</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Why Teams Love SmartCheckbox</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">auto_awesome</span></div>
+          <h3>Auto-Update on Conditions</h3>
+          <p>Checkbox changes when data changes — no formulas needed.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">touch_app</span></div>
+          <h3>Respects Manual Clicks</h3>
+          <p>You uncheck it? It stays. Your input is king.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">palette</span></div>
+          <h3>Custom Values</h3>
+          <p>Use <code>Yes/No</code>, <code>Paid/Pending</code>, <code>Approved/Rejected</code></p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">puzzle_piece</span></div>
+          <h3>AND / OR Logic</h3>
+          <p>Combine conditions: <code>Priority = High AND Due < Today</code></p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">sync</span></div>
+          <h3>Auto-Refresh Toggle</h3>
+          <p>Enable/disable live updates with one click.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><span class="material-icons">history</span></div>
+          <h3>Audit Log</h3>
+          <p>Full history: who changed what, when, and why.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Demos with Elegant Carousels -->
+  <section class="use-cases" id="examples">
+    <div class="container">
+      <h2 class="section-title">See It In Action – Interactive Demos</h2>
+
+      <!-- DEMO 1 -->
+      <div class="demo-block">
+        <div class="demo-content">
+          <h3>Project Task Tracker</h3>
+          <p><code>Status = "Done"</code> → auto-checks to <code>Yes</code><br><strong>Manual override preserved</strong> — your click wins.</p>
+          <a href="https://docs.google.com/spreadsheets/d/1aB2cD3eF4gH5iJ6kL7mN8oP9qR0sT1uV2wX3yZ/edit?usp=sharing" target="_blank" class="btn-primary">
+            Open Live Demo
+          </a>
+        </div>
+        <div class="carousel-container">
+          <div class="carousel" id="carousel1">
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/Z1WQZQW1/Demo1-Part1.png" alt="Status = Done">
+              <div class="carousel-caption">Step 1: Set Target for Checkbox</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/zVKvZ9qr/Demo1-Part2.png" alt="Auto-check">
+              <div class="carousel-caption">Step 2: Set condition: Status = "Done"</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/DHhHF8Y3/Demo1-Part3.png" alt="Manual uncheck">
+              <div class="carousel-caption">Step 3: Set Yes/No, enable auto-refresh, save</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/4nSbmYpG/Demo1-Part4.png" alt="Stays unchecked">
+              <div class="carousel-caption">Step 4: SmartCheckbox = Set it. Forget it.</div>
+            </div>
+          </div>
+<button class="carousel-nav carousel-prev" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_left</span>
+</button>
+<button class="carousel-nav carousel-next" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_right</span>
+</button>
+          <div class="carousel-indicators" id="indicators1"></div>
+        </div>
+      </div>
+
+<!-- DEMO 2: Invoice Payment Tracker -->
+<div class="demo-block">
+  <div class="demo-content">
+    <h3>Invoice Payment Tracker</h3>
+    <p>Auto <code>Paid</code> when date is entered — <strong>you stay in control</strong>.</p>
+    <a href="YOUR_INVOICE_DEMO_LINK" target="_blank" class="btn-primary">Open Live Demo</a>
+  </div>
+  <div class="carousel-container">
+    <div class="carousel" id="carousel2">
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/V0fBt0Md/Demo2-Pic1.png" alt="Target">
+        <div class="carousel-caption">Step 1: Target = Paid? (Rows 2–4)</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/HfN0972p/Monosnap-INVOICE-PAYMENT-TRACKER-Google-Sheets-2025-10-27-14-51-47.png" alt="Helper column">
+        <div class="carousel-caption">Step 2: Use hidden helper column to detect non-blank</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/KxM0jq7F/Demo3-Pic3.png" alt="Custom values">
+        <div class="carousel-caption">Step 3: Set Paid / Pending labels</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/cS7hhpdc/Demo3-Part4.png" alt="Result">
+        <div class="carousel-caption">Step 4: Success! Auto + full manual control</div>
+      </div>
+    </div>
+<button class="carousel-nav carousel-prev" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_left</span>
+</button>
+<button class="carousel-nav carousel-next" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_right</span>
+</button>
+    <div class="carousel-indicators" id="indicators2"></div>
+  </div>
+</div>
+
+<!-- DEMO 3: HR Onboarding Checklist -->
+<div class="demo-block">
+  <div class="demo-content">
+    <h3>HR Onboarding Checklist</h3>
+    <p>Auto <code>Yes</code> only if <strong>all 3 steps</strong> are complete.</p>
+    <a href="YOUR_HR_DEMO_LINK" target="_blank" class="btn-primary">Open Live Demo</a>
+  </div>
+  <div class="carousel-container">
+    <div class="carousel" id="carousel3">
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/NgGmCx88/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-55-53.png" alt="Target">
+        <div class="carousel-caption">Step 1: Target = Ready to Start? (Rows 2–4)</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/0pkcRg6h/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-52-31.png" alt="AND logic">
+        <div class="carousel-caption">Step 2: Add 3 conditions with AND logic</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/bR2tbtNg/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-57-32.png" alt="Save">
+        <div class="carousel-caption">Step 3: Set Yes/No and save rule</div>
+      </div>
+      <div class="carousel-slide">
+        <img src="https://i.ibb.co/Kx6rj8CF/Demo5-Pqrt342.png" alt="Result + Audit">
+        <div class="carousel-caption">Step 4: Success! Auto-updates + full audit trail</div>
+      </div>
+    </div>
+<button class="carousel-nav carousel-prev" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_left</span>
+</button>
+<button class="carousel-nav carousel-next" data-carousel="carousel1">
+  <span class="material-icons" style="font-size:20px;">chevron_right</span>
+</button>
+    <div class="carousel-indicators" id="indicators3"></div>
+  </div>
+</div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <h2 class="section-title">Simple, Transparent Pricing</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>Free</h3>
+          <div class="price">$0<span>/forever</span></div>
+          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
+            <li>Unlimited sheets & rules</li>
+            <li>Full audit log</li>
+            <li>Auto-refresh</li>
+            <li>Community support</li>
+          </ul>
+          <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="btn-primary">Install Free</a>
+        </div>
+        <div class="price-card pro">
+          <h3>Pro</h3>
+          <div class="price">Coming Soon</div>
+          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
+            <li>Team collaboration</li>
+            <li>Export audit log</li>
+            <li>Priority email support</li>
+            <li>Advanced analytics</li>
+          </ul>
+          <div class="coming-soon">Launching Q1 2026</div>
+          <a href="mailto:pro@smartcheckbox.com" class="btn-primary" style="opacity:0.7; pointer-events:none;">Get Notified</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="#features">Features</a>
+        <a href="#examples">Examples</a>
+        <a href="#pricing">Pricing</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/terms.html">Terms</a>
+        <a href="mailto:support@smartcheckbox.com">Support</a>
+      </div>
+      <p>&copy; 2025 SmartCheckbox. Made with <span style="color: #e25555;">Heart</span> for Google Sheets users.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Elegant Carousel System
+    document.querySelectorAll('.carousel').forEach((carousel, carouselIndex) => {
+      const track = carousel;
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const prevBtn = document.querySelector(`.carousel-prev[data-carousel="carousel${carouselIndex + 1}"]`);
+      const nextBtn = document.querySelector(`.carousel-next[data-carousel="carousel${carouselIndex + 1}"]`);
+      const indicatorsContainer = document.getElementById(`indicators${carouselIndex + 1}`);
+      let index = 0;
+
+      // Create indicators
+      slides.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(i));
+        indicatorsContainer.appendChild(dot);
+      });
+
+      const dots = indicatorsContainer.querySelectorAll('.dot');
+
+      function updateCarousel() {
+        track.style.transform = `translateX(-${index * 100}%)`;
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      }
+
+      function goToSlide(i) {
+        index = i;
+        updateCarousel();
+      }
+
+      prevBtn.addEventListener('click', () => {
+        index = (index - 1 + slides.length) % slides.length;
+        updateCarousel();
+      });
+
+      nextBtn.addEventListener('click', () => {
+        index = (index + 1) % slides.length;
+        updateCarousel();
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', e => {
+        if (e.key === 'ArrowLeft') prevBtn.click();
+        if (e.key === 'ArrowRight') nextBtn.click();
+      });
+
+      // Touch swipe
+      let startX;
+      carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+      carousel.addEventListener('touchend', e => {
+        const endX = e.changedTouches[0].clientX;
+        if (startX - endX > 50) nextBtn.click();
+        if (endX - startX > 50) prevBtn.click();
+      });
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
