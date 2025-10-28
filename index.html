@@ -7,12 +7,6 @@
   <meta name="keywords" content="google sheets checkbox, smart checkbox, dynamic checkbox, google workspace, productivity">
   <title>SmartCheckbox™ – The Checkbox That Respects Your Clicks</title>
 
-  <!-- Vercel Analytics Script -->
-  <script>
-    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-  </script>
-  <script defer src="/_vercel/insights/script.js"></script>
-
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   
@@ -90,7 +84,7 @@
 
     .nav-links a:hover { color: var(--primary); }
 
-383    .install-btn {
+    .install-btn {
       background: var(--primary);
       color: white;
       padding: 10px 22px;
@@ -126,7 +120,7 @@
 
     .hero p {
       font-size: 21px;
-      color: var(--gray);
+      color: var 당신(--gray);
       max-width: 720px;
       margin: 0 auto 36px;
     }
@@ -269,51 +263,41 @@
       font-weight: 500;
     }
 
-    /* === PREMIUM CAROUSEL ARROWS === */
-.carousel-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.4);
-  color: white;
-  border: none;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 20;
-  opacity: 0.8;
-}
-
-.carousel-nav:hover {
-  background: rgba(0, 0, 0, 0.7);
-  transform: translateY(-50%) scale(1.15);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  opacity: 1;
-}
-
-.carousel-prev { left: 12px; }
-.carousel-next { right: 12px; }
-
-@media (max-width: 480px) {
-  .carousel-nav { display: none; }
-}
-
-    .carousel-nav:hover {
-      background: white;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+    .carousel-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.4);
+      color: white;
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 20;
+      opacity: 0.8;
     }
 
-    .carousel-prev { left: 16px; }
-    .carousel-next { right: 16px; }
+    .carousel-nav:hover {
+      background: rgba(0, 0, 0, 0.7);
+      transform: translateY(-50%) scale(1.15);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      opacity: 1;
+    }
+
+    .carousel-prev { left: 12px; }
+    .carousel-next { right: 12px; }
+
+    @media (max-width: 480px) {
+      .carousel-nav { display: none; }
+    }
 
     .carousel-indicators {
       position: absolute;
@@ -339,6 +323,47 @@
       transform: scale(1.3);
     }
 
+    /* Resources Section */
+    .resources {
+      padding: 100px 0;
+      background: var(--light);
+    }
+
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 28px;
+    }
+
+    .resource-card {
+      background: white;
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .resource-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+    }
+
+    .resource-card h3 {
+      font-size: 21px;
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+
+    .resource-card p {
+      color: var(--gray);
+      margin-bottom: 18px;
+    }
+
+    .resource-card a {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
     /* Pricing */
     .pricing {
       padding: 100px 0;
@@ -362,6 +387,11 @@
 
     .price-card.pro {
       border: 3px solid var(--primary);
+      transform: scale(1.05);
+    }
+
+    .price-card.enterprise {
+      border: 3px solid var(--secondary);
       transform: scale(1.05);
     }
 
@@ -439,6 +469,7 @@
         <div class="nav-links">
           <a href="#features">Features</a>
           <a href="#examples">Examples</a>
+          <a href="#resources">Resources</a>
           <a href="#pricing">Pricing</a>
           <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank">Install</a>
         </div>
@@ -507,12 +538,12 @@
     <div class="container">
       <h2 class="section-title">See It In Action – Interactive Demos</h2>
 
-      <!-- DEMO 1 -->
+      <!-- DEMO 1: Project Task Tracker -->
       <div class="demo-block">
         <div class="demo-content">
           <h3>Project Task Tracker</h3>
           <p><code>Status = "Done"</code> → auto-checks to <code>Yes</code><br><strong>Manual override preserved</strong> — your click wins.</p>
-          <a href="https://docs.google.com/spreadsheets/d/1cGIVkVR5sAEG_FegpEUmFWLo_3srgkBesgzdWp2Njaw/edit?usp=sharing" target="_blank" class="btn-primary">
+          <a href="https://docs.google.com/spreadsheets/d/1cGIVkVR5sAEG_FegpEUmFWLo_3srgkBesgzdWp2Njaw/copy" target="_blank" class="btn-primary">
             Work with the Sheet
           </a>
         </div>
@@ -535,87 +566,117 @@
               <div class="carousel-caption">Step 4: SmartCheckbox = Set it. Forget it.</div>
             </div>
           </div>
-<button class="carousel-nav carousel-prev" data-carousel="carousel1">
-  <span class="material-icons" style="font-size:20px;">chevron_left</span>
-</button>
-<button class="carousel-nav carousel-next" data-carousel="carousel1">
-  <span class="material-icons" style="font-size:20px;">chevron_right</span>
-</button>
+          <button class="carousel-nav carousel-prev" data-carousel="carousel1">
+            <span class="material-icons" style="font-size:20px;">chevron_left</span>
+          </button>
+          <button class="carousel-nav carousel-next" data-carousel="carousel1">
+            <span class="material-icons" style="font-size:20px;">chevron_right</span>
+          </button>
           <div class="carousel-indicators" id="indicators1"></div>
         </div>
       </div>
 
-<!-- DEMO 2: Invoice Payment Tracker -->
-<div class="demo-block">
-  <div class="demo-content">
-    <h3>Invoice Payment Tracker</h3>
-    <p>Auto <code>Paid</code> when date is entered — <strong>you stay in control</strong>.</p>
-    <a href="https://docs.google.com/spreadsheets/d/1tCX4kXrphNZAdk0Y_ijw9PylNfn86PXO4wHkuO--6p0/edit?usp=sharing" target="_blank" class="btn-primary">Work with the Sheet</a>
-  </div>
-  <div class="carousel-container">
-    <div class="carousel" id="carousel2">
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/V0fBt0Md/Demo2-Pic1.png" alt="Target">
-        <div class="carousel-caption">Step 1: Target = Paid? (Rows 2–4)</div>
+      <!-- DEMO 2: Invoice Payment Tracker -->
+      <div class="demo-block">
+        <div class="demo-content">
+          <h3>Invoice Payment Tracker</h3>
+          <p>Auto <code>Paid</code> when date is entered — <strong>you stay in control</strong>.</p>
+          <a href="https://docs.google.com/spreadsheets/d/1tCX4kXrphNZAdk0Y_ijw9PylNfn86PXO4wHkuO--6p0/copy" target="_blank" class="btn-primary">Work with the Sheet</a>
+        </div>
+        <div class="carousel-container">
+          <div class="carousel" id="carousel2">
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/V0fBt0Md/Demo2-Pic1.png" alt="Target">
+              <div class="carousel-caption">Step 1: Target = Paid? (Rows 2–4)</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/HfN0972p/Monosnap-INVOICE-PAYMENT-TRACKER-Google-Sheets-2025-10-27-14-51-47.png" alt="Helper column">
+              <div class="carousel-caption">Step 2: Use hidden helper column to detect non-blank</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/KxM0jq7F/Demo3-Pic3.png" alt="Custom values">
+              <div class="carousel-caption">Step 3: Set Paid / Pending labels</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/cS7hhpdc/Demo3-Part4.png" alt="Result">
+              <div class="carousel-caption">Step 4: Success! Auto + full manual control</div>
+            </div>
+          </div>
+          <button class="carousel-nav carousel-prev" data-carousel="carousel2">
+            <span class="material-icons" style="font-size:20px;">chevron_left</span>
+          </button>
+          <button class="carousel-nav carousel-next" data-carousel="carousel2">
+            <span class="material-icons" style="font-size:20px;">chevron_right</span>
+          </button>
+          <div class="carousel-indicators" id="indicators2"></div>
+        </div>
       </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/HfN0972p/Monosnap-INVOICE-PAYMENT-TRACKER-Google-Sheets-2025-10-27-14-51-47.png" alt="Helper column">
-        <div class="carousel-caption">Step 2: Use hidden helper column to detect non-blank</div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/KxM0jq7F/Demo3-Pic3.png" alt="Custom values">
-        <div class="carousel-caption">Step 3: Set Paid / Pending labels</div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/cS7hhpdc/Demo3-Part4.png" alt="Result">
-        <div class="carousel-caption">Step 4: Success! Auto + full manual control</div>
-      </div>
-    </div>
-<button class="carousel-nav carousel-prev" data-carousel="carousel2">
-  <span class="material-icons" style="font-size:20px;">chevron_left</span>
-</button>
-<button class="carousel-nav carousel-next" data-carousel="carousel2">
-  <span class="material-icons" style="font-size:20px;">chevron_right</span>
-</button>
-    <div class="carousel-indicators" id="indicators2"></div>
-  </div>
-</div>
 
-<!-- DEMO 3: HR Onboarding Checklist -->
-<div class="demo-block">
-  <div class="demo-content">
-    <h3>HR Onboarding Checklist</h3>
-    <p>Auto <code>Yes</code> only if <strong>all 3 steps</strong> are complete.</p>
-    <a href="https://docs.google.com/spreadsheets/d/1AwUsBJfGBGiw9zrsWG8Qd8Wl7Amab5Wa9lMYHUdX4Xo/edit?usp=sharing" target="_blank" class="btn-primary">Work with the Sheet</a>
-  </div>
-  <div class="carousel-container">
-    <div class="carousel" id="carousel3">
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/NgGmCx88/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-55-53.png" alt="Target">
-        <div class="carousel-caption">Step 1: Target = Ready to Start? (Rows 2–4)</div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/0pkcRg6h/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-52-31.png" alt="AND logic">
-        <div class="carousel-caption">Step 2: Add 3 conditions with AND logic</div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/bR2tbtNg/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-57-32.png" alt="Save">
-        <div class="carousel-caption">Step 3: Set Yes/No and save rule</div>
-      </div>
-      <div class="carousel-slide">
-        <img src="https://i.ibb.co/Kx6rj8CF/Demo5-Pqrt342.png" alt="Result + Audit">
-        <div class="carousel-caption">Step 4: Success! Auto-updates + full audit trail</div>
+      <!-- DEMO 3: HR Onboarding Checklist -->
+      <div class="demo-block">
+        <div class="demo-content">
+          <h3>HR Onboarding Checklist</h3>
+          <p>Auto <code>Yes</code> only if <strong>all 3 steps</strong> are complete.</p>
+          <a href="https://docs.google.com/spreadsheets/d/1AwUsBJfGBGiw9zrsWG8Qd8Wl7Amab5Wa9lMYHUdX4Xo/copy" target="_blank" class="btn-primary">Work with the Sheet</a>
+        </div>
+        <div class="carousel-container">
+          <div class="carousel" id="carousel3">
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/NgGmCx88/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-55-53.png" alt="Target">
+              <div class="carousel-caption">Step 1: Target = Ready to Start? (Rows 2–4)</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/0pkcRg6h/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-52-31.png" alt="AND logic">
+              <div class="carousel-caption">Step 2: Add 3 conditions with AND logic</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/bR2tbtNg/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-57-32.png" alt="Save">
+              <div class="carousel-caption">Step 3: Set Yes/No and save rule</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="https://i.ibb.co/Kx6rj8CF/Demo5-Pqrt342.png" alt="Result + Audit">
+              <div class="carousel-caption">Step 4: Success! Auto-updates + full audit trail</div>
+            </div>
+          </div>
+          <button class="carousel-nav carousel-prev" data-carousel="carousel3">
+            <span class="material-icons" style="font-size:20px;">chevron_left</span>
+          </button>
+          <button class="carousel-nav carousel-next" data-carousel="carousel3">
+            <span class="material-icons" style="font-size:20px;">chevron_right</span>
+          </button>
+          <div class="carousel-indicators" id="indicators3"></div>
+        </div>
       </div>
     </div>
-   <button class="carousel-nav carousel-prev" data-carousel="carousel3">
-  <span class="material-icons" style="font-size:20px;">chevron_left</span>
-</button>
-<button class="carousel-nav carousel-next" data-carousel="carousel3">
-  <span class="material-icons" style="font-size:20px;">chevron_right</span>
-</button>
-    <div class="carousel-indicators" id="indicators3"></div>
-  </div>
-</div>
+  </section>
+
+  <!-- Resources Section -->
+  <section class="resources" id="resources">
+    <div class="container">
+      <h2 class="section-title">Resources & Tutorials</h2>
+      <div class="resources-grid">
+        <div class="resource-card">
+          <h3>Getting Started Guide</h3>
+          <p>Install SmartCheckbox, create your first rule, and test it live.</p>
+          <a href="https://dev.to/aryanirani123/getting-started-with-smartcheckbox-install-setup-and-your-first-rule-42jo" target="_blank">Read on DEV.to</a>
+        </div>
+        <div class="resource-card">
+          <h3>Content Approval Workflow</h3>
+          <p>Auto-approve content only when all team members sign off.</p>
+          <a href="https://dev.to/aryanirani123/hands-on-tutorial-build-a-content-approval-workflow-with-smartcheckbox-1mc4" target="_blank">Read on DEV.to</a>
+        </div>
+        <div class="resource-card">
+          <h3>Documentation</h3>
+          <p>Full reference: conditions, audit log, advanced logic, and more.</p>
+          <a href="#">Coming Soon</a>
+        </div>
+        <div class="resource-card">
+          <h3>Video Tutorials</h3>
+          <p>Watch step-by-step walkthroughs on YouTube.</p>
+          <a href="#">Coming Soon</a>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- Pricing -->
@@ -643,10 +704,22 @@
             <li>Priority email support</li>
             <li>Advanced analytics</li>
           </ul>
-         <div class="coming-soon">Launching Q1 2026</div>
-<a href="https://forms.gle/wkZmaxNRTNcNR87XA" target="_blank" class="btn-primary pro-notify">
+          <div class="coming-soon">Launching Q1 2026</div>
+          <a href="https://forms.gle/wkZmaxNRTNcNR87XA" target="_blank" class="btn-primary pro-notify">
   Get Notified for Pro
 </a>
+        </div>
+        <div class="price-card enterprise">
+          <h3>Enterprise</h3>
+          <div class="price">Contact Us</div>
+          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
+            <li>SSO & domain control</li>
+            <li>Custom integrations</li>
+            <li>Dedicated support</li>
+            <li>Compliance & SLA</li>
+          </ul>
+          <a href="mailto:aryanirani123@gmail.com" class="btn-primary">Contact Sales</a>
+        </div>
       </div>
     </div>
   </section>
@@ -657,6 +730,7 @@
       <div class="footer-links">
         <a href="#features">Features</a>
         <a href="#examples">Examples</a>
+        <a href="#resources">Resources</a>
         <a href="#pricing">Pricing</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
