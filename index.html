@@ -3,809 +3,354 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="SmartCheckbox: Auto-updating Google Sheets checkboxes that respect your manual clicks. Free forever.">
-  <meta name="keywords" content="google sheets checkbox, smart checkbox, dynamic checkbox, google workspace, productivity">
-  <title>SmartCheckbox™ – The Checkbox That Respects Your Clicks</title>
+  <title>Sheet Protector Pro – Lock Formulas, Ranges & Sheets</title>
 
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  
-  <!-- Material Icons -->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>Checkmark</text></svg>">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
 
   <style>
-    :root {
-      --primary: #188038;
-      --primary-dark: #0d6b2a;
-      --secondary: #1a73e8;
-      --danger: #d93025;
-      --warning: #f9ab00;
-      --gray: #5f6368;
-      --light: #f8f9fa;
-      --dark: #202124;
-      --border: #dadce0;
-      --radius: 16px;
-      --shadow: 0 8px 24px rgba(0,0,0,0.1);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
+  /* ---------- BASIC RESET ---------- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Google Sans', sans-serif; background: #fff; color: #202124; line-height: 1.6; }
+  a { color: inherit; text-decoration: none; }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+  /* ---------- HEADER ---------- */
+  header { padding: 16px 24px; border-bottom: 1px solid #dadce0; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: #fff; z-index: 100; }
+  .logo { font-weight: 700; font-size: 20px; color: #1a73e8; display: flex; align-items: center; gap: 8px; }
+  .nav a { margin-left: 24px; font-weight: 500; color: #5f6368; }
+  .nav a:hover { color: #1a73e8; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #fff;
-      color: var(--dark);
-      line-height: 1.7;
-    }
+  /* ---------- HERO ---------- */
+  .hero { text-align: center; padding: 100px 24px; background: linear-gradient(135deg, #f8f9fa 0%, #e8f0fe 100%); }
+  .hero h1 { font-size: 52px; font-weight: 700; margin-bottom: 16px; }
+  .hero p { font-size: 20px; color: #5f6368; max-width: 700px; margin: 0 auto 32px; }
+  .btn { display: inline-block; padding: 14px 36px; border-radius: 24px; font-weight: 600; font-size: 16px; margin: 0 8px; transition: .2s; }
+  .btn-primary { background: #1a73e8; color: #fff; }
+  .btn-primary:hover { background: #1669c1; }
+  .btn-outline { border: 1px solid #dadce0; color: #5f6368; }
+  .btn-outline:hover { background: #f1f3f4; }
 
-    a { text-decoration: none; color: inherit; }
+  /* ---------- FEATURES ---------- */
+  .features { padding: 100px 24px; background: #fff; }
+  .section-title { text-align: center; font-size: 36px; font-weight: 600; margin-bottom: 48px; color: #202124; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px; max-width: 1000px; margin: 0 auto; }
+  .card { background: #f8f9fa; border-radius: 16px; padding: 32px; text-align: center; transition: transform .2s; }
+  .card:hover { transform: translateY(-4px); }
+  .card-icon { font-family: 'Material Symbols Outlined'; font-size: 50px; margin-bottom: 16px; color: #1a73e8; }
+  .card h3 { font-size: 22px; margin-bottom: 12px; color: #202124; }
+  .card p { color: #5f6368; font-size: 15px; }
 
-    /* Layout */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+  /* ---------- SCREENSHOTS (CAROUSEL) ---------- */
+.screenshots { padding: 100px 24px; background: #f8f9fa; text-align: center; }
+.screenshot-grid { display: none; /* Hide the old grid structure */ } 
+.carousel-container { position: relative; max-width: 800px; margin: 32px auto 0; overflow: hidden; border-radius: 16px; box-shadow: 0 8px 24px rgba(0,0,0,.1); }
+.carousel-track { display: flex; transition: transform 0.4s ease-in-out; }
+.carousel-slide { min-width: 100%; box-sizing: border-box; cursor: pointer; }
+.carousel-slide img { width: 100%; height: auto; display: block; }
+.screenshot-caption { padding: 16px; background: #fff; font-weight: 500; color: #202124; text-align: center; }
 
-    /* Header */
-    header {
-      padding: 16px 0;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 100;
-      backdrop-filter: blur(8px);
-    }
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(32, 33, 36, 0.7); /* Dark semi-transparent */
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 50;
+    transition: background 0.3s;
+    line-height: 1;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.carousel-button:hover { background: rgba(26, 115, 232, 0.9); }
+.carousel-button.prev { left: 10px; }
+.carousel-button.next { right: 10px; }
 
-    nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+/* Keep the lightbox styles the same */
 
-    .logo {
-      font-weight: 700;
-      font-size: 26px;
-      color: var(--primary);
-    }
+  /* Lightbox */
+  .lightbox { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,.85); align-items: center; justify-content: center; z-index: 1000; padding: 20px; cursor: zoom-out; }
+  .lightbox.active { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 12px; box-shadow: 0 12px 40px rgba(0,0,0,.5); animation: fade .25s ease; }
+  @keyframes fade { from { opacity: 0; transform: scale(.9); } to { opacity: 1; transform: scale(1); } }
+  .lightbox::after { content: "×"; position: absolute; top: 20px; right: 30px; font-size: 36px; color: #fff; cursor: pointer; }
 
-    .logo span { color: var(--dark); }
+  /* ---------- PRICING (FIXED) ---------- */
+  .pricing { padding: 100px 24px; background: #fff; text-align: center; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; max-width: 1000px; margin: 48px auto 0; } /* Increased min-width for better spacing */
+  .price-card { border: 1px solid #dadce0; border-radius: 16px; padding: 40px 32px; background: #fff; transition: .3s; word-break: normal; } /* Added padding & word-break */
+  .price-card:hover { border-color: #1a73e8; box-shadow: 0 8px 24px rgba(26,115,232,.1); }
+  .price-card h3 { font-size: 24px; margin-bottom: 12px; color: #202124; }
+  .price-card .price { font-size: 36px; font-weight: 700; color: #1a73e8; margin: 16px 0; }
+  .price-card .price small { font-size: 16px; font-weight: 400; color: #5f6368; }
+  .price-card ul { list-style: none; text-align: left; margin: 24px 0; color: #5f6368; padding: 0; }
+  .price-card ul li { margin-bottom: 12px; position: relative; padding-left: 32px; word-break: normal; } /* Increased padding-left */
+  .price-card ul li::before { content: '✓'; color: #1a73e8; font-weight: bold; font-size: 18px; position: absolute; left: 0; top: 0; } /* Fixed: Unicode checkmark, no text */
+  .price-card .btn { margin-top: 24px; }
+  .coming-soon { opacity: .7; } /* Softer dim for "Pro" */
+  .enterprise-btn { background: #202124; color: #fff; }
+  .enterprise-btn:hover { background: #000; }
+  .price-card ul { 
+    list-style: none; 
+    text-align: left; 
+    margin: 24px 0; 
+    color: #5f6368; 
+    padding: 0; 
+}
+.price-card ul li { 
+    margin-bottom: 12px; 
+    position: relative; 
+    padding-left: 32px; 
+    
+    /* --- KEY CHANGES BELOW --- */
+    /* Ensure the text stays on one line if possible, otherwise wrap */
+    /* Reverting to default word-break for better wrapping control */
+    word-break: normal; 
+    white-space: normal; /* Allow normal wrapping */
+    /* To visually 'align' everything, we can reduce the padding on small screens. */
+}
+.price-card ul li::before { 
+    content: '✓'; 
+    color: #1a73e8; 
+    font-weight: bold; 
+    font-size: 18px; 
+    position: absolute; 
+    left: 0; 
+    top: 0; 
+}
 
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      font-weight: 500;
-      font-size: 15px;
-    }
+  /* ---------- CTA & FOOTER ---------- */
+  .cta { padding: 100px 24px; text-align: center; background: linear-gradient(135deg, #e8f0fe 0%, #d2e3fc 100%); }
+  .cta h2 { font-size: 36px; margin-bottom: 16px; }
+  footer { padding: 60px 24px 40px; background: #202124; color: #9aa0a6; font-size: 14px; text-align: center; }
+  .footer-links { display: flex; justify-content: center; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .footer-links a { color: #9aa0a6; }
+  .footer-links a:hover { color: #fff; }
 
-    .nav-links a:hover { color: var(--primary); }
-
-    .install-btn {
-      background: var(--primary);
-      color: white;
-      padding: 10px 22px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 15px;
-      transition: var(--transition);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .install-btn:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(24,128,56,0.3);
-    }
-
-    /* Hero */
-    .hero {
-      padding: 100px 0;
-      text-align: center;
-    }
-
-    .hero h1 {
-      font-size: 52px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      font-weight: 700;
-    }
-
-    .hero p {
-      font-size: 21px;
-      color: var 당신(--gray);
-      max-width: 720px;
-      margin: 0 auto 36px;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      padding: 16px 36px;
-      border-radius: 12px;
-      font-size: 18px;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(24,128,56,0.35);
-    }
-
-    /* Features */
-    .features {
-      padding: 100px 0;
-      background: var(--light);
-    }
-
-    .section-title {
-      text-align: center;
-      font-size: 38px;
-      margin-bottom: 56px;
-      font-weight: 600;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-    }
-
-    .feature-card {
-      background: white;
-      padding: 32px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-      transition: var(--transition);
-    }
-
-    .feature-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 32px rgba(0,0,0,0.12);
-    }
-
-    .feature-icon {
-      font-size: 52px;
-      margin-bottom: 18px;
-      color: var(--primary);
-    }
-
-    .feature-card h3 {
-      font-size: 21px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-
-    /* Demos with Elegant Carousels */
-    .use-cases {
-      padding: 100px 0;
-    }
-
-    .demo-block {
-      display: flex;
-      gap: 40px;
-      margin-bottom: 80px;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .demo-content {
-      flex: 1;
-      min-width: 320px;
-    }
-
-    .demo-content h3 {
-      font-size: 28px;
-      margin-bottom: 16px;
-      font-weight: 600;
-    }
-
-    .demo-content p {
-      margin-bottom: 20px;
-      color: var(--gray);
-      font-size: 17px;
-    }
-
-    .demo-content .btn-primary {
-      font-size: 16px;
-      padding: 12px 28px;
-    }
-
-    /* Elegant Carousel */
-    .carousel-container {
-      flex: 1;
-      min-width: 320px;
-      position: relative;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--shadow);
-      background: white;
-    }
-
-    .carousel {
-      display: flex;
-      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .carousel-slide {
-      min-width: 100%;
-      position: relative;
-    }
-
-    .carousel-slide img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    .carousel-caption {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(transparent, rgba(0,0,0,0.8));
-      color: white;
-      padding: 24px 20px 20px;
-      font-size: 15px;
-      font-weight: 500;
-    }
-
-    .carousel-nav {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.4);
-      color: white;
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 20;
-      opacity: 0.8;
-    }
-
-    .carousel-nav:hover {
-      background: rgba(0, 0, 0, 0.7);
-      transform: translateY(-50%) scale(1.15);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-      opacity: 1;
-    }
-
-    .carousel-prev { left: 12px; }
-    .carousel-next { right: 12px; }
-
-    @media (max-width: 480px) {
-      .carousel-nav { display: none; }
-    }
-
-    .carousel-indicators {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-    }
-
-    .dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.5);
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .dot.active {
-      background: white;
-      transform: scale(1.3);
-    }
-
-    /* Resources Section */
-    .resources {
-      padding: 100px 0;
-      background: var(--light);
-    }
-
-    .resources-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 28px;
-    }
-
-    .resource-card {
-      background: white;
-      padding: 32px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      transition: var(--transition);
-    }
-
-    .resource-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-    }
-
-    .resource-card h3 {
-      font-size: 21px;
-      margin-bottom: 14px;
-      font-weight: 600;
-    }
-
-    .resource-card p {
-      color: var(--gray);
-      margin-bottom: 18px;
-    }
-
-    .resource-card a {
-      color: var(--primary);
-      font-weight: 500;
-    }
-
-    /* Pricing */
-    .pricing {
-      padding: 100px 0;
-      background: var(--light);
-    }
-
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 32px;
-    }
-
-    .price-card {
-      background: white;
-      padding: 40px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-      transition: var(--transition);
-    }
-
-    .price-card.pro {
-      border: 3px solid var(--primary);
-      transform: scale(1.05);
-    }
-
-    .price-card.enterprise {
-      border: 3px solid var(--secondary);
-      transform: scale(1.05);
-    }
-
-    .price-card:hover {
-      transform: translateY(-4px);
-    }
-
-    .price {
-      font-size: 52px;
-      font-weight: 700;
-      color: var(--primary);
-      margin: 20px 0;
-    }
-
-    .price small {
-      font-size: 17px;
-      color: var(--gray);
-    }
-
-    .coming-soon {
-      background: #e8f5e9;
-      color: var(--primary);
-      font-weight: 600;
-      padding: 10px 20px;
-      border-radius: 30px;
-      font-size: 15px;
-      margin: 16px 0;
-      display: inline-block;
-    }
-
-    /* Footer */
-    footer {
-      padding: 60px 0;
-      background: var(--dark);
-      color: white;
-      text-align: center;
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      margin-bottom: 28px;
-      flex-wrap: wrap;
-      font-size: 15px;
-    }
-
-    .footer-links a {
-      color: #aaa;
-      transition: var(--transition);
-    }
-
-    .footer-links a:hover {
-      color: white;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 38px; }
-      .hero p { font-size: 18px; }
-      .section-title { font-size: 32px; }
-      .demo-block { flex-direction: column; }
-      .carousel-container { order: -1; margin-bottom: 24px; }
-      .nav-links { display: none; }
-    }
-  </style>
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 38px; }
+    .hero p { font-size: 18px; }
+    .nav { display: none; }
+    .screenshot-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; gap: 24px; } /* Stack on mobile */
+    .price-card { padding: 32px 24px; } /* Reduce padding on small screens */
+  }
+</style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- HEADER -->
   <header>
-    <div class="container">
-      <nav>
-        <div class="logo">Smart<span>Checkbox</span></div>
-        <div class="nav-links">
-          <a href="#features">Features</a>
-          <a href="#examples">Examples</a>
-          <a href="#resources">Resources</a>
-          <a href="#pricing">Pricing</a>
-          <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank">Install</a>
-        </div>
-        <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="install-btn">
-          <span class="material-icons" style="font-size:18px;">download</span> Install Free
-        </a>
-      </nav>
-    </div>
+    <div class="logo"><span class="material-symbols-outlined">shield</span> Sheet Protector Pro</div>
+    <div class="nav">
+            <a href="#features">Features</a>
+            <a href="#screenshots">See it in Action</a>
+            <a href="#pricing">Pricing</a>
+            <a href="/docs">Docs</a>     <a href="mailto:aryanirani123@gmail.com">Contact</a>
+          </div>
   </header>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="container">
-      <h1>SmartCheckbox™</h1>
-      <p>Checkboxes that <strong>update automatically</strong> — but <strong>never override your clicks</strong>.</p>
-      <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="btn-primary">
-        <span class="material-icons">extension</span> Install Free (1-Click)
-      </a>
-      <p style="margin-top: 18px; color: var(--gray); font-size: 15px;">
-        Works in Google Sheets • No signup • <strong>Free forever</strong>
-      </p>
+    <h1>Protect Your Google Sheets</h1>
+    <p>Lock formulas, ranges, and sheets with one click. No popups. Enterprise-grade security.</p>
+    <div>
+      <a href="" target="_blank" class="btn btn-primary">Coming Soon</a>
+      <a href="#screenshots" class="btn btn-outline">See it in Action</a>
     </div>
   </section>
 
-  <!-- Features -->
+  <!-- FEATURES -->
   <section class="features" id="features">
-    <div class="container">
-      <h2 class="section-title">Why Teams Love SmartCheckbox</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">auto_awesome</span></div>
-          <h3>Auto-Update on Conditions</h3>
-          <p>Checkbox changes when data changes — no formulas needed.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">touch_app</span></div>
-          <h3>Respects Manual Clicks</h3>
-          <p>You uncheck it? It stays. Your input is king.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">palette</span></div>
-          <h3>Custom Values</h3>
-          <p>Use <code>Yes/No</code>, <code>Paid/Pending</code>, <code>Approved/Rejected</code></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">puzzle_piece</span></div>
-          <h3>AND / OR Logic</h3>
-          <p>Combine conditions: <code>Priority = High AND Due < Today</code></p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">sync</span></div>
-          <h3>Auto-Refresh Toggle</h3>
-          <p>Enable/disable live updates with one click.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon"><span class="material-icons">history</span></div>
-          <h3>Audit Log</h3>
-          <p>Full history: who changed what, when, and why.</p>
-        </div>
-      </div>
+    <h2 class="section-title">Enterprise-Grade Features</h2>
+    <div class="grid">
+      <div class="card"><span class="material-symbols-outlined card-icon">security</span><h3>Lock Formulas</h3><p>Automatically protect every formula cell in your sheet.</p></div>
+      <div class="card"><span class="material-symbols-outlined card-icon">lock</span><h3>Range & Sheet Protection</h3><p>Lock inputs, allow edits, or secure entire sheets with custom access.</p></div>
+      <div class="card"><span class="material-symbols-outlined card-icon">history</span><h3>Undo Last Action</h3><p>Fix mistakes instantly with one-click undo.</p></div>
+      <div class="card"><span class="material-symbols-outlined card-icon">description</span><h3>Export Audit Log</h3><p>Generate compliance-ready protection history in seconds.</p></div>
+      <div class="card"><span class="material-symbols-outlined card-icon">visibility</span><h3>Live Lock Status</h3><p>See exactly what’s protected with real-time indicators.</p></div>
+      <div class="card"><span class="material-symbols-outlined card-icon">tune</span><h3>Multiple Protection Modes</h3><p>Choose between <b>Warning Only</b>, <b>Editors Only</b>, or <b>Full Lock</b> modes.</p></div>
     </div>
   </section>
 
-  <!-- Demos with Elegant Carousels -->
-  <section class="use-cases" id="examples">
-    <div class="container">
-      <h2 class="section-title">See It In Action – Interactive Demos</h2>
+  <!-- SCREENSHOTS (SIMPLE LIGHTBOX) -->
+  <section class="screenshots" id="screenshots">
+    <h2 class="section-title">See It in Action</h2>
+    <p>Real protection, real results — in your Google Sheets.</p>
 
-      <!-- DEMO 1: Project Task Tracker -->
-      <div class="demo-block">
-        <div class="demo-content">
-          <h3>Project Task Tracker</h3>
-          <p><code>Status = "Done"</code> → auto-checks to <code>Yes</code><br><strong>Manual override preserved</strong> — your click wins.</p>
-          <a href="https://docs.google.com/spreadsheets/d/1cGIVkVR5sAEG_FegpEUmFWLo_3srgkBesgzdWp2Njaw/copy" target="_blank" class="btn-primary">
-            Work with the Sheet
-          </a>
+    <div class="carousel-container">
+        <div class="carousel-track">
+    
+            <div class="screenshot carousel-slide" data-full="screenshots/lock-formulas.png">
+                <img src="https://i.ibb.co/gZ2shvvT/lock-formulas.png" alt="One-Click Formula Protection">
+                <div class="screenshot-caption">One-Click Formula Protection</div>
+            </div>
+    
+            <div class="screenshot carousel-slide" data-full="screenshots/lock-range.png">
+                <img src="https://i.ibb.co/cVZYFpC/lock-range.png" alt="Protect Specific Ranges">
+                <div class="screenshot-caption">Protect Specific Ranges</div>
+            </div>
+    
+            <div class="screenshot carousel-slide" data-full="screenshots/export-log.png">
+                <img src="https://i.ibb.co/dJjWQ1tP/export-log.png" alt="Export Full Audit Log">
+                <div class="screenshot-caption">Export Full Audit Log</div>
+            </div>
         </div>
-        <div class="carousel-container">
-          <div class="carousel" id="carousel1">
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/Z1WQZQW1/Demo1-Part1.png" alt="Status = Done">
-              <div class="carousel-caption">Step 1: Set Target for Checkbox</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/zVKvZ9qr/Demo1-Part2.png" alt="Auto-check">
-              <div class="carousel-caption">Step 2: Set condition: Status = "Done"</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/DHhHF8Y3/Demo1-Part3.png" alt="Manual uncheck">
-              <div class="carousel-caption">Step 3: Set Yes/No, enable auto-refresh, save</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/4nSbmYpG/Demo1-Part4.png" alt="Stays unchecked">
-              <div class="carousel-caption">Step 4: SmartCheckbox = Set it. Forget it.</div>
-            </div>
-          </div>
-          <button class="carousel-nav carousel-prev" data-carousel="carousel1">
-            <span class="material-icons" style="font-size:20px;">chevron_left</span>
-          </button>
-          <button class="carousel-nav carousel-next" data-carousel="carousel1">
-            <span class="material-icons" style="font-size:20px;">chevron_right</span>
-          </button>
-          <div class="carousel-indicators" id="indicators1"></div>
-        </div>
-      </div>
-
-      <!-- DEMO 2: Invoice Payment Tracker -->
-      <div class="demo-block">
-        <div class="demo-content">
-          <h3>Invoice Payment Tracker</h3>
-          <p>Auto <code>Paid</code> when date is entered — <strong>you stay in control</strong>.</p>
-          <a href="https://docs.google.com/spreadsheets/d/1tCX4kXrphNZAdk0Y_ijw9PylNfn86PXO4wHkuO--6p0/copy" target="_blank" class="btn-primary">Work with the Sheet</a>
-        </div>
-        <div class="carousel-container">
-          <div class="carousel" id="carousel2">
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/V0fBt0Md/Demo2-Pic1.png" alt="Target">
-              <div class="carousel-caption">Step 1: Target = Paid? (Rows 2–4)</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/HfN0972p/Monosnap-INVOICE-PAYMENT-TRACKER-Google-Sheets-2025-10-27-14-51-47.png" alt="Helper column">
-              <div class="carousel-caption">Step 2: Use hidden helper column to detect non-blank</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/KxM0jq7F/Demo3-Pic3.png" alt="Custom values">
-              <div class="carousel-caption">Step 3: Set Paid / Pending labels</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/cS7hhpdc/Demo3-Part4.png" alt="Result">
-              <div class="carousel-caption">Step 4: Success! Auto + full manual control</div>
-            </div>
-          </div>
-          <button class="carousel-nav carousel-prev" data-carousel="carousel2">
-            <span class="material-icons" style="font-size:20px;">chevron_left</span>
-          </button>
-          <button class="carousel-nav carousel-next" data-carousel="carousel2">
-            <span class="material-icons" style="font-size:20px;">chevron_right</span>
-          </button>
-          <div class="carousel-indicators" id="indicators2"></div>
-        </div>
-      </div>
-
-      <!-- DEMO 3: HR Onboarding Checklist -->
-      <div class="demo-block">
-        <div class="demo-content">
-          <h3>HR Onboarding Checklist</h3>
-          <p>Auto <code>Yes</code> only if <strong>all 3 steps</strong> are complete.</p>
-          <a href="https://docs.google.com/spreadsheets/d/1AwUsBJfGBGiw9zrsWG8Qd8Wl7Amab5Wa9lMYHUdX4Xo/copy" target="_blank" class="btn-primary">Work with the Sheet</a>
-        </div>
-        <div class="carousel-container">
-          <div class="carousel" id="carousel3">
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/NgGmCx88/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-55-53.png" alt="Target">
-              <div class="carousel-caption">Step 1: Target = Ready to Start? (Rows 2–4)</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/0pkcRg6h/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-52-31.png" alt="AND logic">
-              <div class="carousel-caption">Step 2: Add 3 conditions with AND logic</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/bR2tbtNg/Monosnap-HR-ONBOARDING-Google-Sheets-2025-10-27-15-57-32.png" alt="Save">
-              <div class="carousel-caption">Step 3: Set Yes/No and save rule</div>
-            </div>
-            <div class="carousel-slide">
-              <img src="https://i.ibb.co/Kx6rj8CF/Demo5-Pqrt342.png" alt="Result + Audit">
-              <div class="carousel-caption">Step 4: Success! Auto-updates + full audit trail</div>
-            </div>
-          </div>
-          <button class="carousel-nav carousel-prev" data-carousel="carousel3">
-            <span class="material-icons" style="font-size:20px;">chevron_left</span>
-          </button>
-          <button class="carousel-nav carousel-next" data-carousel="carousel3">
-            <span class="material-icons" style="font-size:20px;">chevron_right</span>
-          </button>
-          <div class="carousel-indicators" id="indicators3"></div>
-        </div>
-      </div>
+    
+        <button class="carousel-button prev">&#10094;</button>
+        <button class="carousel-button next">&#10095;</button>
     </div>
   </section>
 
-  <!-- Resources Section -->
-  <section class="resources" id="resources">
-    <div class="container">
-      <h2 class="section-title">Resources & Tutorials</h2>
-      <div class="resources-grid">
-        <div class="resource-card">
-          <h3>Getting Started Guide</h3>
-          <p>Install SmartCheckbox, create your first rule, and test it live.</p>
-          <a href="https://dev.to/aryanirani123/getting-started-with-smartcheckbox-install-setup-and-your-first-rule-42jo" target="_blank">Read on DEV.to</a>
-        </div>
-        <div class="resource-card">
-          <h3>Content Approval Workflow</h3>
-          <p>Auto-approve content only when all team members sign off.</p>
-          <a href="https://dev.to/aryanirani123/hands-on-tutorial-build-a-content-approval-workflow-with-smartcheckbox-1mc4" target="_blank">Read on DEV.to</a>
-        </div>
-        <div class="resource-card">
-          <h3>Documentation</h3>
-          <p>Full reference: conditions, audit log, advanced logic, and more.</p>
-          <a href="#">Coming Soon</a>
-        </div>
-        <div class="resource-card">
-          <h3>Video Tutorials</h3>
-          <p>Watch step-by-step walkthroughs on YouTube.</p>
-          <a href="#">Coming Soon</a>
-        </div>
-      </div>
+  <!-- Lightbox (hidden) -->
+  <div class="lightbox" id="lightbox"><img id="lb-img" src="" alt=""></div>
+
+ <!-- PRICING (FIXED) -->
+<section class="pricing" id="pricing">
+  <h2 class="section-title">Simple, Transparent Pricing</h2>
+  <div class="pricing-grid">
+    
+    <!-- Free Tier -->
+    <div class="price-card">
+      <h3>Free</h3>
+      <div class="price">$0 <small>/ forever</small></div>
+      <ul>
+        <li>Lock up to 3 sheets</li>
+        <li>Basic formula protection</li>
+        <li>Undo last action</li>
+        <li>Email support</li>
+      </ul>
+      <a href="" class="btn btn-primary">Get Started Free</a>
+    </div>
+
+    <!-- Pro Tier (Coming Soon - Dimmed but Clickable) -->
+    <div class="price-card coming-soon">
+      <h3>Pro</h3>
+      <div class="price">Coming Soon</div>
+      <ul>
+        <li>Unlimited sheets & files</li>
+        <li>Advanced range locking</li>
+        <li>Audit log export</li>
+        <li>Priority support</li>
+        <li>Team collaboration</li>
+      </ul>
+      <a href="" class="btn btn-outline">Notify Me</a>
+    </div>
+
+    <!-- Enterprise Tier -->
+    <div class="price-card">
+      <h3>Enterprise</h3>
+      <div class="price">Custom</div>
+      <ul>
+        <li>All Pro features</li>
+        <li>SSO & admin controls</li>
+        <li>Custom compliance reports</li>
+        <li>Dedicated account manager</li>
+        <li>SLAs & onboarding</li>
+      </ul>
+      <a href="mailto:aryanirani123@gmail.com" class="btn enterprise-btn">Contact Sales</a>
+    </div>
+
+  </div>
+</section>
+
+  <!-- BLOG (coming soon) -->
+  <section class="features" id="blog">
+    <h2 class="section-title">Blog & Tutorials</h2>
+    <div class="grid">
+      <div class="card"><span class="material-symbols-outlined card-icon">schedule</span><h3>Coming Soon</h3><p>Detailed guides, tutorials, and videos — stay tuned!</p></div>
     </div>
   </section>
 
-  <!-- Pricing -->
-  <section class="pricing" id="pricing">
-    <div class="container">
-      <h2 class="section-title">Simple, Transparent Pricing</h2>
-      <div class="pricing-grid">
-        <div class="price-card">
-          <h3>Free</h3>
-          <div class="price">$0<span>/forever</span></div>
-          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
-            <li>Unlimited sheets & rules</li>
-            <li>Full audit log</li>
-            <li>Auto-refresh</li>
-            <li>Community support</li>
-          </ul>
-          <a href="https://workspace.google.com/marketplace/app/smartcheckbox/664272491133" target="_blank" class="btn-primary">Install Free</a>
-        </div>
-        <div class="price-card pro">
-          <h3>Pro</h3>
-          <div class="price">Coming Soon</div>
-          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
-            <li>Team collaboration</li>
-            <li>Export audit log</li>
-            <li>Priority email support</li>
-            <li>Advanced analytics</li>
-          </ul>
-          <div class="coming-soon">Launching Q1 2026</div>
-          <a href="https://forms.gle/wkZmaxNRTNcNR87XA" target="_blank" class="btn-primary pro-notify">
-  Get Notified for Pro
-</a>
-        </div>
-        <div class="price-card enterprise">
-          <h3>Enterprise</h3>
-          <div class="price">Contact Us</div>
-          <ul style="text-align: left; margin: 28px 0; font-size:15px;">
-            <li>SSO & domain control</li>
-            <li>Custom integrations</li>
-            <li>Dedicated support</li>
-            <li>Compliance & SLA</li>
-          </ul>
-          <a href="mailto:aryanirani123@gmail.com" class="btn-primary">Contact Sales</a>
-        </div>
-      </div>
-    </div>
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to Secure Your Data?</h2>
+    <p>Free for personal use. No credit card. Installs in 10 seconds.</p>
+    <a href="https://workspace.google.com/marketplace/app/sheet_protector_pro/XXXXXXXXX" target="_blank"
+       class="btn btn-primary" style="font-size:18px;padding:20px 60px;">Coming Soon</a>
   </section>
 
-  <!-- Footer -->
+  <!-- FOOTER -->
   <footer>
-    <div class="container">
-      <div class="footer-links">
-        <a href="#features">Features</a>
-        <a href="#examples">Examples</a>
-        <a href="#resources">Resources</a>
-        <a href="#pricing">Pricing</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
-        <a href="mailto:support@smartcheckbox.com">Support</a>
-      </div>
-      <p>&copy; 2025 SmartCheckbox. Made with <span style="color: #e25555;">Heart</span> for Google Sheets users.</p>
+    <div class="footer-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="docstemp.html">Documentation</a>
+      <a href="mailto:aryanirani123@gmail.com">Support</a>
+      <a href="mailto:aryanirani123@gmail.com">Enterprise</a>
     </div>
+    <p>© 2025 Sheet Protector Pro. Built with <span style="color:#e25555;">heart</span> for Google Sheets.</p>
   </footer>
 
   <script>
-    // Elegant Carousel System
-    document.querySelectorAll('.carousel').forEach((carousel, carouselIndex) => {
-      const track = carousel;
-      const slides = carousel.querySelectorAll('.carousel-slide');
-      const prevBtn = document.querySelector(`.carousel-prev[data-carousel="carousel${carouselIndex + 1}"]`);
-      const nextBtn = document.querySelector(`.carousel-next[data-carousel="carousel${carouselIndex + 1}"]`);
-      const indicatorsContainer = document.getElementById(`indicators${carouselIndex + 1}`);
-      let index = 0;
+    // --- Lightbox Functionality ---
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const screenshots = document.querySelectorAll('.screenshot');
 
-      // Create indicators
-      slides.forEach((_, i) => {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (i === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(i));
-        indicatorsContainer.appendChild(dot);
-      });
-
-      const dots = indicatorsContainer.querySelectorAll('.dot');
-
-      function updateCarousel() {
-        track.style.transform = `translateX(-${index * 100}%)`;
-        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-      }
-
-      function goToSlide(i) {
-        index = i;
-        updateCarousel();
-      }
-
-      prevBtn.addEventListener('click', () => {
-        index = (index - 1 + slides.length) % slides.length;
-        updateCarousel();
-      });
-
-      nextBtn.addEventListener('click', () => {
-        index = (index + 1) % slides.length;
-        updateCarousel();
-      });
-
-      // Keyboard navigation
-      document.addEventListener('keydown', e => {
-        if (e.key === 'ArrowLeft') prevBtn.click();
-        if (e.key === 'ArrowRight') nextBtn.click();
-      });
-
-      // Touch swipe
-      let startX;
-      carousel.addEventListener('touchstart', e => startX = e.touches[0].clientX);
-      carousel.addEventListener('touchend', e => {
-        const endX = e.changedTouches[0].clientX;
-        if (startX - endX > 50) nextBtn.click();
-        if (endX - startX > 50) prevBtn.click();
-      });
-    });
-
-    // Smooth scroll
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
+    screenshots.forEach(card => {
+        card.addEventListener('click', () => {
+            lbImg.src = card.dataset.full;
+            lightbox.classList.add('active');
         });
-      });
     });
-  </script>
+
+    lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lightbox.classList.remove('active'); });
+
+    // --- Carousel Functionality ---
+    const track = document.querySelector('.carousel-track');
+    const slides = Array.from(track.children);
+    const nextButton = document.querySelector('.carousel-button.next');
+    const prevButton = document.querySelector('.carousel-button.prev');
+    const slideWidth = slides[0].getBoundingClientRect().width;
+    let currentSlide = 0;
+
+    // Set up the track
+    const setSlidePosition = (slide, index) => {
+        slide.style.left = slideWidth * index + 'px';
+    };
+
+    // Since we're using flexbox for simpler sliding, the 'left' property isn't necessary,
+    // we'll just use `transform: translateX()`.
+
+    const moveToSlide = (track, currentSlideIndex, targetSlideIndex) => {
+        const amountToMove = targetSlideIndex * slideWidth;
+        track.style.transform = 'translateX(-' + amountToMove + 'px)';
+        currentSlide = targetSlideIndex;
+
+        // Update button visibility (optional but good UX)
+        prevButton.style.display = (targetSlideIndex === 0) ? 'none' : 'flex';
+        nextButton.style.display = (targetSlideIndex === slides.length - 1) ? 'none' : 'flex';
+    }
+
+    // Initialize: move to first slide and hide the "previous" button
+    moveToSlide(track, 0, 0); 
+
+    // When I click right, move slides to the right
+    nextButton.addEventListener('click', e => {
+        const nextSlideIndex = currentSlide + 1;
+        if (nextSlideIndex < slides.length) {
+            moveToSlide(track, currentSlide, nextSlideIndex);
+        }
+    });
+
+    // When I click left, move slides to the left
+    prevButton.addEventListener('click', e => {
+        const prevSlideIndex = currentSlide - 1;
+        if (prevSlideIndex >= 0) {
+            moveToSlide(track, currentSlide, prevSlideIndex);
+        }
+    });
+</script>
 </body>
 </html>
